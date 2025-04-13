@@ -33,3 +33,17 @@ function M.name_taken(name)
 end
 
 return M
+
+
+-- we don't deal with saveas right now
+--vim.api.nvim_create_autocmd("BufWritePost", {
+--  callback = function(args)
+--    if args.match ~= "" and not vim.api.nvim_buf_get_name(args.buf):match("^%[") then
+--      -- Likely a real save, not an unnamed buffer
+--      print("Possibly a save-as:", args.match)
+--    end
+--  end,
+--})
+
+-- But we could, catch the write to a file name, look for our buffer in the terminal,
+--  and change its version of the name there
