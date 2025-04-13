@@ -5,11 +5,12 @@ local file_util = require("pytemp.file")
 
 local M = {}
 
-local function run_python_terminal()
+local function run_python_terminal(opts)
+
   local calling_buf = vim.api.nvim_get_current_buf()
   local calling_name = vim.api.nvim_buf_get_name(calling_buf)
 
-  -- We're often in the editor, but... 
+  -- We're often in the editor, but...
   local editor_buf = calling_buf
   local editor_name = calling_name
   -- ... in case we're not
@@ -49,7 +50,6 @@ local function run_python_terminal()
         and editor_name_check == editor_name
   end
   if not ok then -- at end, not ok, recorded term_buf invalid, make new
-    print("Opening new")
     vim.cmd("belowright split")
     vim.cmd("enew")
     term_buf = vim.api.nvim_get_current_buf()
@@ -85,9 +85,12 @@ local function run_python_terminal()
   for _, dep in ipairs(uv_info.dependencies) do
     table.insert(parts, "--with \"" .. dep .. "\"")
   end
-
+  local flags = ""
+  if opts and opts.args == "--no-project" then
+    flags = "--no-project "
+  end
   -- reun command and set all of its vars
-  local cmd = "uv run " .. table.concat(parts, " ") .. " --with ipython ipython --theme=pride -i " .. tmp_filename
+  local cmd = "uv run " .. flags .. table.concat(parts, " ") .. " --with ipython ipython --theme=pride -i " .. tmp_filename
   local process_nr = vim.fn.termopen(cmd)
   vim.api.nvim_buf_set_name(term_buf, editor_name .. "-ipython")
   vim.api.nvim_buf_set_var(editor_buf, "ipy-terminal_buf", term_buf)
@@ -98,7 +101,7 @@ local function run_python_terminal()
 
   vim.keymap.set('t', '<C-w><Up>', '<C-\\><C-n><C-w><Up>', { noremap = true, buffer = term_buf })
   vim.keymap.set('t', '<C-w><C-w>', function()
-    M.run_python_terminal_and_i() -- would this need to take options then
+    M.run_python_terminal_and_i(opts) -- would this need to take options then
   end, { noremap = true, buffer = term_buf })
 
   vim.api.nvim_create_autocmd("BufEnter", {
@@ -116,20 +119,36 @@ local function run_python_terminal()
 end
 
 -- Runs the terminal and then jumps to it.
-function M.run_python_terminal_and_i()
-  local target_win, cmd = run_python_terminal()
+function M.run_python_terminal_and_i(opts)
+  local target_win, cmd = run_python_terminal(opts)
   vim.api.nvim_set_current_win(target_win)
   vim.cmd("startinsert")
 end
 
 -- Create a new Python script in a new tab with a header,
 -- then immediately launch the interactive terminal.
-function M.new_python_script(args)
-  if buffer_util.name_taken(vim.fn.fnamemodify(args.args, ":p")) then
+function M.new_python_script(opts)
+  local name = nil
+  local no_project = ""
+
+  for _, arg in ipairs(vim.fn.split(opts.args)) do
+    if arg == "--no-project" then
+      no_project = "--no-project"
+    elseif not name then
+      name = arg
+    else
+      vim.api.nvim_err_writeln("Too many positional arguments")
+      return
+    end
+  end
+
+
+  name = name or vim.fn.getcwd() .. "/" .. vim.fn.fnamemodify(vim.fn.tempname(), ":t") .. "script.py"
+  if buffer_util.name_taken(vim.fn.fnamemodify(name, ":p")) then
     vim.api.nvim_err_writeln("Can't reuse names in PyTemp.")
     return
   end
-  vim.cmd("tabnew " .. args.args)
+  vim.cmd("tabnew " .. name)
   local header_lines = {
     "",
     "# /// script",
@@ -144,7 +163,8 @@ function M.new_python_script(args)
   vim.bo.bufhidden = 'wipe'
   buffer_util.wiper(vim.api.nvim_get_current_buf())
   local current_win = vim.api.nvim_get_current_win()
-  local _, cmd = run_python_terminal()
+  opts = { args = no_project }
+  local _, cmd = run_python_terminal(opts)
   vim.api.nvim_set_current_win(current_win)
   vim.schedule(function()
     vim.api.nvim_echo({ { cmd, "None" } }, false, {})
