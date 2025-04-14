@@ -32,18 +32,39 @@ function M.name_taken(name)
   return nil
 end
 
-return M
 
-
--- we don't deal with saveas right now
---vim.api.nvim_create_autocmd("BufWritePost", {
---  callback = function(args)
---    if args.match ~= "" and not vim.api.nvim_buf_get_name(args.buf):match("^%[") then
---      -- Likely a real save, not an unnamed buffer
---      print("Possibly a save-as:", args.match)
+function M.manage_writes(bufnr)
+  return
+--  vim.api.nvim_create_autocmd("BufWriteCmd", {
+--    buffer = bufnr,  -- your buffer of interest; usually set dynamically
+--    callback = function(args)
+--      vim.api.nvim_buf_set_option(bufnr, 'modified', true)
+--      return true
 --    end
---  end,
---})
-
--- But we could, catch the write to a file name, look for our buffer in the terminal,
---  and change its version of the name there
+--  })
+--  local old_name = vim.api.nvim_buf_get_name(bufnr)
+--  local new_name = args.match  -- the target filename for the write
+--  print("Names")
+--  print(old_name)
+--  print(new_name)
+--  -- Check if we've allowed a forced write in the past.
+--  local ok, allowed_before = pcall(vim.api.nvim_buf_get_var, bufnr, "_allow_simple_write")
+--  if not ok then allowed_before = false end
+--
+--  -- Determine if the write is allowed:
+--  -- Allow if:
+--  --   (1) the command was forced (e.g. :w!),
+--  --   (2) a saveas is happening (filename changes),
+--  --   (3) we’ve already had a forced write on this buffer.
+--  if (old_name ~= new_name and new_name ~= "") or allowed_before then
+--    -- Mark that a forced operation has happened; allow plain :w later.
+--    vim.api.nvim_buf_set_var(bufnr, "_allow_simple_write", true)
+--    -- Execute the write. Using write! so that the command itself doesn't fail.
+--    vim.cmd("write! " .. vim.fn.fnameescape(new_name))
+--  else
+--    vim.api.nvim_err_writeln("Use :saveas[!] to write this buffer.")
+--  end
+--  return true  -- cancel further processing (we handled the write)
+--end
+end
+return M

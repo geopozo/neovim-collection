@@ -149,6 +149,8 @@ function M.new_python_script(opts)
     return
   end
   vim.cmd("tabnew " .. name)
+  local editor_buf = vim.api.nvim_get_current_buf()
+  local current_win = vim.api.nvim_get_current_win()
   local header_lines = {
     "",
     "# /// script",
@@ -161,8 +163,8 @@ function M.new_python_script(opts)
   vim.api.nvim_buf_set_option(0, 'modified', false)
   vim.bo.filetype = "python"
   vim.bo.bufhidden = 'wipe'
-  buffer_util.wiper(vim.api.nvim_get_current_buf())
-  local current_win = vim.api.nvim_get_current_win()
+  buffer_util.wiper(editor_buf)
+  buffer_util.manage_writes(editor_buf)
   opts = { args = no_project }
   local _, cmd = run_python_terminal(opts)
   vim.api.nvim_set_current_win(current_win)
