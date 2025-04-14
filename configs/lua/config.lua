@@ -1,5 +1,5 @@
-if vim.fn.executable("ruff-lsp") ~= 1 then
-  error("ruff-lsp is not installed or not in PATH")
+if vim.fn.executable("ruff") ~= 1 then
+  error("ruff is not installed or not in PATH")
 end
 
 -- Configure `ruff-lsp`.
