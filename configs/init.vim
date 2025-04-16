@@ -25,4 +25,11 @@ set nolist
 set wildmenu
 nnoremap <C-Space> :noh<CR>
 set clipboard=unnamedplus
+
 lua require('config')
+
+set foldlevel=99            " start with all folds open
+set foldenable              " enable folding, but don’t close anything by default
+set foldopen=               " disables auto-opening on cursor move
+set foldclose=
+
