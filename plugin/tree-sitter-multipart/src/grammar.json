@@ -1,0 +1,143 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
+  "name": "multipart",
+  "rules": {
+    "document": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "part"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "final_boundary"
+        }
+      ]
+    },
+    "part": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "boundary_line"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "headers"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "body"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "boundary_line": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "--BOUNDRY\\r?\\n"
+      }
+    },
+    "final_boundary": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "--BOUNDRY--\\r?\\n?"
+      }
+    },
+    "_eol": {
+      "type": "PATTERN",
+      "value": "\\r?\\n"
+    },
+    "header_name": {
+      "type": "PATTERN",
+      "value": "[A-Za-z0-9\\-]+"
+    },
+    "header_value": {
+      "type": "PATTERN",
+      "value": "[^\\r\\n]+"
+    },
+    "header": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "header_name"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "header_value"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
+    "headers": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "header"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
+    "body": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "body_line"
+      }
+    },
+    "body_line": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "PATTERN",
+          "value": "[^\\r\\n]*(\\r?\\n)?"
+        }
+      }
+    }
+  },
+  "extras": [],
+  "conflicts": [],
+  "precedences": [],
+  "externals": [],
+  "inline": [],
+  "supertypes": [],
+  "reserved": {}
+}

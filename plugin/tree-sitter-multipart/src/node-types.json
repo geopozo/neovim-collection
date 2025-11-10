@@ -1,0 +1,125 @@
+[
+  {
+    "type": "body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "body_line",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "document",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "final_boundary",
+          "named": true
+        },
+        {
+          "type": "part",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "header",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "header_name",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "header_value",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "headers",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "header",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "part",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "body",
+          "named": true
+        },
+        {
+          "type": "boundary_line",
+          "named": true
+        },
+        {
+          "type": "headers",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": "body_line",
+    "named": true
+  },
+  {
+    "type": "boundary_line",
+    "named": true
+  },
+  {
+    "type": "final_boundary",
+    "named": true
+  },
+  {
+    "type": "header_name",
+    "named": true
+  },
+  {
+    "type": "header_value",
+    "named": true
+  }
+]

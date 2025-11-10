@@ -1,0 +1,26 @@
+==================
+Simple multipart
+==================
+
+--BOUNDRY
+Content-Type: text/plain
+
+hello
+world
+--BOUNDRY--
+
+---
+
+(document
+  (part
+    (boundary_line)
+    (headers
+      (header (header_name) (header_value))
+    )
+    (body
+      (body_line)
+      (body_line)
+    )
+  )
+  (final_boundary))
+
