@@ -8,7 +8,7 @@ vim.api.nvim_create_user_command('SidecarToml', function()
   -- %NAME = filename (with extension), same dir
   local dir  = vim.fn.fnamemodify(file, ':h')
   local name = vim.fn.fnamemodify(file, ':t')
-  local side = dir .. '/' .. name .. '.toml'
+  local side = dir .. '/' .. name .. 'meta.toml'
 
   -- Create sidecar if missing
   if not vim.uv.fs_stat(side) then
