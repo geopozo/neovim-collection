@@ -16,3 +16,11 @@ I'm using lazyvim, I just add this repo to the plugins spec and all get loaded.
 # ROADMAP
 
 See issues on github.
+
+# Developmer Notes
+
+plugin/ always get loaded at start.
+
+lua/ are lua modules that are available through `require(...)`
+
+
