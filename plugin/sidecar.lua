@@ -8,7 +8,7 @@ vim.api.nvim_create_user_command('SidecarToml', function()
   -- %NAME = filename (with extension), same dir
   local dir  = vim.fn.fnamemodify(file, ':h')
   local name = vim.fn.fnamemodify(file, ':t')
-  local side = dir .. '/' .. name .. 'meta.toml'
+  local side = dir .. '/' .. name .. '.meta.toml'
 
   -- Create sidecar if missing
   if not vim.uv.fs_stat(side) then
@@ -19,6 +19,16 @@ vim.api.nvim_create_user_command('SidecarToml', function()
     end
     fh:write('# metadata for ' .. name .. '\n')
     fh:write('name = "' .. name:gsub('"','\\"') .. '"\n')
+    fh:write('related = []' .. ' # "repo:path" \n')
+    fh:write('goal = ""' .. '\n')
+    fh:write('next_step = ""' .. '\n')
+    fh:write('campaign = []' .. ' # "repo:path" \n')
+    fh:write('potential = ""' .. ' # high/medium/low/mixed \n')
+    fh:write('completeness = -1' .. ' # 1-10 \n')
+    fh:write('published = [] ' .. '\n')
+    fh:write('history = [] ' .. ' # published/sent/retracted: { "when": date, "where": "" }\n')
+    fh:write('tag = [] ' .. ' # Thought/Draft/Amendum/Essay/Concept/Guide/Spec\n')
+    fh:write('# Obsolete/Abandoned/Microblog/Series\n')
     fh:close()
   end
 
