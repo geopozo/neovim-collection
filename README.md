@@ -2,9 +2,9 @@
 
 ## Install
 
-I use [lazy](https://github.com/folke/lazy.nvim) (install
-guide)[https://lazy.folke.io/installation] and then reference this in the lazy
-config.
+I use [lazy](https://github.com/folke/lazy.nvim)
+ [install guide](https://lazy.folke.io/installation) which installs plugins,
+including this one, from a simple list.
 
 NB: Lazy config can take a dir = directive, otherwise it downloads repos.
 
