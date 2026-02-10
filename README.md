@@ -2,13 +2,19 @@
 
 ## Markdown
 
-We add extra syntax highlight and override fods to only do # sections,
+We add extra syntax highlight and override folds to only do # sections,
 as otherwise behavior is wonky.
+
+## Install
+
+I use [lazy](https://github.com/folke/lazy.nvim) and then reference this in the lazy
+config.
 
 ## PyTemp
 
-This relies on uv. It opens up a temporary script and integrates those
-dependencies with your project. It opens an ipython terminal for you.
+This relies on [uv](https://github.com/astral-sh/uv). It opens up a temporary
+script and integrates those dependencies with your project. It opens an ipython
+terminal for you.
 
 `PyIt [--no-project]`
 
@@ -36,4 +42,5 @@ plugin/ always gets loaded at start.
 lua/ are lua modules that are available through `require(...)`
 
 I have my plugin/ scripts load the `require(...)` for the lua folder.
+
 
