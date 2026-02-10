@@ -1,14 +1,29 @@
 # Neovim-Collection
 
+## Install
+
+I use [lazy](https://github.com/folke/lazy.nvim) (install
+guide)[https://lazy.folke.io/installation] and then reference this in the lazy
+config.
+
+NB: Lazy config can take a dir = directive, otherwise it downloads repos.
+
+example plugins/init.lua from installation:
+
+```lua
+return {
+  ...,
+  {
+    dir = "~/projects/utilities/neovim-collection.git",
+  },
+}
+```
+
 ## Markdown
 
 We add extra syntax highlight and override folds to only do # sections,
 as otherwise behavior is wonky.
 
-## Install
-
-I use [lazy](https://github.com/folke/lazy.nvim) and then reference this in the lazy
-config.
 
 ## PyTemp
 
@@ -24,12 +39,10 @@ Open ipython terminal for a current script you have open.
 
 Open a new tab w/ a blank script file and a ipython terminal.
 
-I'm using lazyvim, I just add this repo to the plugins spec and all get loaded.
-
 ## Sidecar
 
 Opens up a .meta.toml for the current file in its directory w/ the schema that I
-use for tagging writing.
+use for taged writing.
 
 # ROADMAP
 
