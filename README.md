@@ -6,9 +6,9 @@ I use [lazy](https://github.com/folke/lazy.nvim)
  [install guide](https://lazy.folke.io/installation) which installs plugins,
 including this one, from a simple list.
 
-NB: Lazy config can take a dir = directive, otherwise it downloads repos.
+NB: Lazy config can take a `dir =` directive, otherwise it downloads repos.
 
-example plugins/init.lua from installation:
+example *plugins/init.lua* (see the install guide above):
 
 ```lua
 return {
@@ -16,6 +16,7 @@ return {
   {
     dir = "~/projects/utilities/neovim-collection.git",
   },
+  "geopozo/neovim-collection", -- same thing, but lazy auto-appends .git
 }
 ```
 
@@ -24,6 +25,15 @@ return {
 We add extra syntax highlight and override folds to only do # sections,
 as otherwise behavior is wonky.
 
+### Dev Notes
+
+Some commands to help debug:
+
+`:InspectTree` (use 2x `[` and `]` to switch between trees)
+`:Inspect`
+`:hi @done.markdown_inline`
+
+Markdown uses two trees: `markdown` and `markdown_inline`.
 
 ## PyTemp
 
@@ -48,6 +58,11 @@ use for taged writing.
 
 See issues on github.
 
+Also, it would be nice to see like,
+
+1. logs
+1. when a setting gets overriden, we know how and where
+
 # Developmer Notes
 
 plugin/ always gets loaded at start.
@@ -55,5 +70,3 @@ plugin/ always gets loaded at start.
 lua/ are lua modules that are available through `require(...)`
 
 I have my plugin/ scripts load the `require(...)` for the lua folder.
-
-
