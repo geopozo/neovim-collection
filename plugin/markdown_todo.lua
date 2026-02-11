@@ -1,3 +1,4 @@
+local M = {}
 vim.treesitter.query.set("markdown_inline", "highlights", [[;extends
 
   ((inline) @cancelled (#match? @cancelled "\\[c\\]") (#set! "priority" 130))
@@ -14,12 +15,17 @@ vim.treesitter.query.set("markdown", "highlights", [[;extends
   )
 ]])
 
-vim.api.nvim_set_hl(0, "@skipped.markdown_inline", { fg = "#DDDD00", strikethrough = true })
-vim.api.nvim_set_hl(0, "@cancelled.markdown_inline", { fg = "#ff5577", strikethrough = true })
-vim.api.nvim_set_hl(0, "@priority.markdown_inline",   { fg = "#ff1111" })
-vim.api.nvim_set_hl(0, "@done.markdown", { fg = "#00ff88" })
-vim.api.nvim_set_hl(0, "@done.markdown_inline", { fg = "#00ff88" })
+function M.apply()
+  vim.api.nvim_set_hl(0, "@skipped.markdown_inline", { fg = "#DDDD00", strikethrough = true })
+  vim.api.nvim_set_hl(0, "@cancelled.markdown_inline", { fg = "#ff5577", strikethrough = true })
+  vim.api.nvim_set_hl(0, "@priority.markdown_inline",   { fg = "#ff1111" })
+  vim.api.nvim_set_hl(0, "@done.markdown", { fg = "#00ff88" })
+  vim.api.nvim_set_hl(0, "@done.markdown_inline", { fg = "#00ff88" })
+end
+M.apply()
 
 vim.treesitter.query.set("markdown", "folds", [[
   (section) @fold
 ]])
+
+_G.TODOHighlights = M
