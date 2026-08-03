@@ -4,11 +4,12 @@
 
 I use [lazy](https://github.com/folke/lazy.nvim)
  [install guide](https://lazy.folke.io/installation) which installs plugins,
-including this one, from a simple list.
+including this one, from a JSON-ish (but lua) specification:
+in *.config/nvim/lua/plugins/*.
 
-NB: Lazy config can take a `dir =` directive, otherwise it downloads repos.
+In my case, I store these three files in my dot-management system.
 
-example *plugins/init.lua* (see the install guide above):
+### example *.config/nvim/lua/plugins/init.lua*:
 
 ```lua
 return {
@@ -20,9 +21,11 @@ return {
 }
 ```
 
+NB: Lazy config can take a `dir =` directive, otherwise it downloads repos.
+
 ## Markdown
 
-We add extra syntax highlight and override folds to only do # sections,
+We add extra syntax highlight and override folds to only do `#` sections,
 as otherwise behavior is wonky.
 
 ### Dev Notes
@@ -54,19 +57,22 @@ Open a new tab w/ a blank script file and a ipython terminal.
 Opens up a .meta.toml for the current file in its directory w/ the schema that I
 use for taged writing.
 
-# ROADMAP
+## ROADMAP
 
 See issues on github.
 
-Also, it would be nice to see like,
+Also, it would be nice to see,
 
 1. logs
 1. when a setting gets overriden, we know how and where
 
-# Developmer Notes
+## Developmer Notes
 
-plugin/ always gets loaded at start.
+For any plugin (like this one) that you include in Lazy's list of plugins:
 
-lua/ are lua modules that are available through `require(...)`
+_plugin/*.lua_ are loaded at boot.
 
-I have my plugin/ scripts load the `require(...)` for the lua folder.
+_lua/_ are lua modules are available through `require(...)` (anywhere that runs
+lua, such as the main _init.lua_ in _.config/nvim_).
+
+Here, my _plugin/_ scripts `require(...)` everything in _lua/_ at boot.
