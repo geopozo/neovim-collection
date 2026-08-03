@@ -13,9 +13,8 @@ In my case, I store these three files in my dot-management system.
 
 ```lua
 return {
-  ...,
   {
-    dir = "~/projects/utilities/neovim-collection.git",
+    dir = vim.fn.expand("~/projects/utilities/neovim-collection.git"),
   },
   "geopozo/neovim-collection", -- same thing, but lazy auto-appends .git
 }
