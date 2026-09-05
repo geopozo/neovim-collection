@@ -1,0 +1,6 @@
+:Psql	neovim-collection.txt	/*:Psql*
+:PyIt	neovim-collection.txt	/*:PyIt*
+:PyTemp	neovim-collection.txt	/*:PyTemp*
+:SidecarToml	neovim-collection.txt	/*:SidecarToml*
+neovim-collection	neovim-collection.txt	/*neovim-collection*
+neovim-collection.txt	neovim-collection.txt	/*neovim-collection.txt*

@@ -1,0 +1,56 @@
+*neovim-collection.txt*   A collection of small plugins    *neovim-collection*
+
+See README.md in repo for detailed instructions. This a command reference.
+
+==============================================================================
+                                                                    *:PyTemp*
+:PyTemp [{name}] [--no-project]
+
+    Open a new tab with a fresh Python script and start IPython below it.
+    {name} is the script path; if omitted, a random name ending in
+    `script.py` is used in the current directory. The buffer starts with an
+    empty PEP 723 header and is wiped when hidden, so `:w` it to keep it.
+    A name already open in another buffer is refused.
+
+                                                                      *:PyIt*
+:PyIt [--no-project]
+
+    Run the current buffer in IPython, then jump to the terminal. On repeat
+    calls the previous IPython process is killed and the same terminal window
+    is reused, so edit, `:PyIt`, repeat. Also works when called from the
+    terminal buffer itself.
+
+    `--no-project` is passed to `uv run` so a surrounding `pyproject.toml` is
+    ignored.
+
+Terminal buffer mappings (terminal mode):
+
+    `<C-w><C-w>`    Restart IPython with the current script.
+    `<C-w><Up>`     Leave terminal mode and move to the window above.
+
+Entering the terminal buffer starts insert mode and echoes the exact `uv run`
+command that was used.
+
+==============================================================================
+                                                                      *:Psql*
+:Psql [{database}]
+
+    Send the whole current buffer on stdin to: >
+
+        psql -X -v ON_ERROR_STOP=1 -d {database} -f -
+<
+    Standard output is echoed to the message area. Standard error is shown
+    with |vim.notify()|, as an error if `psql` exits non-zero. {database} is
+    remembered, so later calls may omit it. Calling with no argument before
+    any database has been given is an error.
+
+==============================================================================
+                                                               *:SidecarToml*
+:SidecarToml
+
+    Open `{file}.meta.toml` next to the current file in a split above, sized
+    to one third of the current window height (minimum 3 lines). If the file
+    does not exist it is created.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
