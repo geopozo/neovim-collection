@@ -24,8 +24,4 @@ function M.apply()
 end
 M.apply()
 
-vim.treesitter.query.set("markdown", "folds", [[
-  (section) @fold
-]])
-
 _G.TODOHighlights = M
